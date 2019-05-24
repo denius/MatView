@@ -52,6 +52,9 @@ void bcopy();
 
 /* TCL / TK Header Files */
 
+/* https://www.tcl.tk/man/tcl/TclLib/SetResult.htm */
+#define USE_INTERP_RESULT
+
 #include <tk.h>
 
 
