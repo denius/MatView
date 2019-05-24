@@ -1,0 +1,153 @@
+#
+# $Id: Makefile.in,v 1.17 1999/03/26 15:45:35 kohl Exp $
+#
+
+#
+# Configure Variables
+#
+
+prefix			=	@prefix@
+exec_prefix		=	@exec_prefix@
+bindir			=	@bindir@
+
+
+#
+# Installation Directories
+#
+
+INSTALL_BIN		=	$(bindir)
+
+INSTALL_ROOT	=	$(prefix)/MatView
+
+
+#
+# Source & Working Directories
+#
+
+CC				=	@CC@
+
+LIBFUNCS		=	@HAS_BZERO@ @HAS_BCOPY@ @HAS_GETTIMEOFDAY@
+
+CFLAGS			=	@CFLAGS@ @ARCH_CFLAGS@ $(LIBFUNCS)
+
+CTAGS			=	@CTAGS@
+
+SDIR			=	@MATVIEW_ROOT@
+
+WDIR			=	@MATVIEW_ROOT@/@ARCH@
+
+PROG			=	$(WDIR)/matview
+
+
+#
+# Matlab Stuff
+#
+
+MATLAB_INCL		=	@MATLAB_INCL@
+MATLAB_LIBDIR	=	@MATLAB_LIBDIR@
+MATLAB_LIBS		=	@MATLAB_LIBS@
+
+
+#
+# Tcl / TK Settings
+#
+
+TCLINCL			=	-I@TCL_INCDIR@
+TKINCL			=	-I@TK_INCDIR@
+
+TCLLIB			=	@TCL_LIB_SPEC@
+TKLIB			=	@TK_LIB_SPEC@
+
+XINCL			=	@TK_XINCLUDES@
+XLIB			=	@X_LIBS@ @TK_LIBS@
+
+
+#
+# Compile Flags
+#
+
+MAX_MAT_SIZE	=	@MAX_MAT_SIZE@
+
+MV_DEFINES		=	-DINSTALL_ROOT="\"$(INSTALL_ROOT)\"" \
+					$(MAX_MAT_SIZE)
+
+TCL_CFLAGS		=	$(TCLINCL) $(TKINCL) $(XINCL) $(MATLAB_INCL)
+
+MV_CFLAGS		=	$(CFLAGS) $(TCL_CFLAGS) $(MV_DEFINES)
+
+TCLTKLIBS		=	$(TKLIB) $(TCLLIB) $(XLIB)
+
+LIBS			=	$(TCLTKLIBS) $(MATLAB_LIBDIR) $(MATLAB_LIBS)
+
+
+#
+# Object Files
+#
+
+OBJS		=	$(WDIR)/matview.o $(WDIR)/view.o $(WDIR)/commands.o \
+				$(WDIR)/file.o $(WDIR)/util.o $(WDIR)/matview_glob.o
+
+SOURCES		=	$(SDIR)/matview.c $(SDIR)/view.c $(SDIR)/commands.c \
+				$(SDIR)/file.c $(SDIR)/util.c $(SDIR)/matview_glob.c
+
+HEADERS		=	$(SDIR)/matview.h $(SDIR)/const.h \
+				$(SDIR)/matview_glob.h
+
+ARCH_MSG	=	$(WDIR)/.arch_msg
+
+
+#
+# Targets
+#
+
+default:  all
+
+all:  $(WDIR) $(ARCH_MSG) $(PROG)
+
+install:  all
+	cp $(PROG) $(INSTALL_BIN)
+	cp *.tcl *.xbm $(INSTALL_ROOT)
+
+$(WDIR):
+	@- mkdir $(WDIR)
+
+clean:
+	- rm -f $(WDIR)/*.o
+
+veryclean:  clean
+	- rm -f $(WDIR)/matview
+
+configclean:
+	- rm -f config.*
+
+distclean:  veryclean configclean
+
+again:
+	touch $(SDIR)/*.c $(SDIR)/*.h ; make
+
+$(ARCH_MSG):  $(HEADERS) $(SOURCES)
+	@ echo "Building MatView in $(WDIR)..."
+	@ touch $(ARCH_MSG)
+
+$(WDIR)/matview:  $(OBJS)
+	$(CC) $(MV_CFLAGS) -o $(WDIR)/matview $(OBJS) $(LIBS)
+	@ $(CTAGS) *.c *.h 2>&1 /dev/null &
+
+$(WDIR)/matview.o:  $(SDIR)/matview.c $(HEADERS)
+	$(CC) $(MV_CFLAGS) -c -o $@ $(SDIR)/matview.c
+
+$(WDIR)/view.o:  $(SDIR)/view.c $(HEADERS)
+	$(CC) $(MV_CFLAGS) -c -o $@ $(SDIR)/view.c
+
+$(WDIR)/commands.o:  $(SDIR)/commands.c $(HEADERS)
+	$(CC) $(MV_CFLAGS) -c -o $@ $(SDIR)/commands.c
+
+$(WDIR)/file.o:  $(SDIR)/file.c $(HEADERS)
+	$(CC) $(MV_CFLAGS) -c -o $@ $(SDIR)/file.c
+
+$(WDIR)/util.o:  $(SDIR)/util.c $(HEADERS)
+	$(CC) $(MV_CFLAGS) -c -o $@ $(SDIR)/util.c
+
+$(WDIR)/matview_glob.o:  $(SDIR)/matview_glob.c $(HEADERS)
+	$(CC) $(MV_CFLAGS) -c -o $@ $(SDIR)/matview_glob.c
+

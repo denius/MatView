@@ -1,0 +1,80 @@
+#
+# MatView Startup File
+#     -> Set User Defaults.
+#
+# Place in $HOME/.matviewrc
+#
+
+puts "\[.matviewrc\]"
+flush stdout
+
+#
+# default zero color
+#
+# usage:  default_zero_color [ ON | OFF ] <color>
+#
+
+#default_zero_color OFF white
+#default_zero_color ON black
+
+#
+# default color range
+#
+# usage:  default_color_range <min_value> <max_value>
+#
+
+#default_color_range 0 0
+#default_color_range -100.0 100.0
+
+#
+# default_complex_view
+#
+# usage:  default_complex_view [ re | im | magn | phase ]
+#
+
+#default_complex_view re
+
+#
+# default grid
+#
+# usage:  default_grid [ ON | OFF ]
+#             <nrows> <row_offset> <ncols> <col_offset>
+#
+
+#default_grid OFF 100 0 100 0
+
+#
+# default data mode
+#
+# usage:  default_data_mode [ matrix | field ]
+#
+
+#default_data_mode matrix
+#default_data_mode field
+
+#
+# default printer command
+#
+# usage:  default_print_command <cmd>
+#
+
+#default_print_command "lpr -Plw"
+#default_print_command "lp -dlw"
+
+#
+# optimize for over-the-network display of MatView
+#
+# usage:  network_optimize
+#
+
+#network_optimize
+
+#
+# specific interface efficiency tuning parameters
+#
+# usage:  default_interface_param progress_ticks <nticks>
+#
+
+#default_interface_param progress_ticks 100
+#default_interface_param progress_ticks 20
+
