@@ -17,7 +17,7 @@ bindir			=	@bindir@
 
 INSTALL_BIN		=	$(bindir)
 
-INSTALL_ROOT	=	$(prefix)/MatView
+INSTALL_ROOT	=	$(prefix)/share/MatView
 
 
 #
@@ -105,6 +105,7 @@ default:  all
 all:  $(WDIR) $(ARCH_MSG) $(PROG)
 
 install:  all
+	mkdir -p $(INSTALL_ROOT)
 	cp $(PROG) $(INSTALL_BIN)
 	cp *.tcl *.xbm $(INSTALL_ROOT)
 

@@ -218,8 +218,8 @@ AC_SUBST(MATLAB_LIBS)
 #
 
 AC_CHECKING(Tcl/Tk installation)
-legal_tk_versions="8.4 8.0 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1"
-legal_tcl_versions="8.4 8.0 7.9 7.8 7.7 7.6 7.5"
+legal_tk_versions="8.8 8.7 8.6 8.5 8.4 8.0 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1"
+legal_tcl_versions="8.8 8.7 8.6 8.5 8.4 8.0 7.9 7.8 7.7 7.6 7.5"
 
 user_tcltk="no"
 
@@ -532,7 +532,7 @@ AC_EGREP_CPP(good_tk_version,
     good_tk_version
 #endif],is_good_tk_version=yes,is_good_tk_version=no)
 AC_MSG_RESULT($is_good_tk_version)
-if test "$is_good_tk_version" = "no"; then exit 1; fi
+###Can't find### if test "$is_good_tk_version" = "no"; then exit 1; fi
 
 TCL_INCDIR="$tclhdir"
 TK_INCDIR="$tkhdir"
