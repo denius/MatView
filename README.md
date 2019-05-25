@@ -58,7 +58,6 @@ To run MatView, go into the subdirectory for your system and invoke:
 ```
 matview
 ```
-Running "matview -help" provides a list of command line arguments.
 ## Building on ubuntu
 To compile on the actual version of ubuntu (18.04) you may need to install several additional packages:
 ```
@@ -81,6 +80,19 @@ Much better to create a `deb` package
 ```
 sudo checkinstall make install
 ```
+
+## Usage
+
+Simple run:
+```
+matview -F bfw398b.mtx
+```
+A set the useful options:
+```
+matview -abs -R max -A -Z white -F bfw398b.mtx
+```
+Running `matview -help` provides a list of command line arguments.
+
 Enjoy!
 
 ## Files:
